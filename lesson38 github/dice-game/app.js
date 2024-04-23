@@ -1,6 +1,9 @@
 //document.querySelector(".dice") -g bainga duudahgui neg variabled joorloj awaad ashiglaad yawchii.Engevel programm dahin dahin querry hhgui mash hurdan bolno.
 var diceDom = document.querySelector(".dice");
 
+//togloom duussan esehiig hadgalah tuluviin huvisagch
+var isNewGame;
+
 //toglogchiin eeljiin tuluviig hadgalah huvisagch 1-r toglogch 0; 2-r toglogch 1 gesen utga awna
 var activePlayer;
 
@@ -10,8 +13,10 @@ var scores;
 //toglogchiin eeljindee tsugluulj baigaag hadgalah huvisagch
 var roundScore;
 
-//togloomiig shineer ehluuleh function
+//---togloomiig shineer ehluuleh function
 function initGame() {
+  //togloom ehellee gedeg tuluvt oruulna
+  isNewGame = true;
   //toglogchiin eeljiin tuluviig hadgalah huvisagch 1-r toglogch 0; 2-r toglogch 1 gesen utga awna
   activePlayer = 0;
 
@@ -48,47 +53,57 @@ initGame();
 
 // Shoo shiddeg event listener. shooShid -g arilgaad anonymous function nemchlee
 document.querySelector(".btn-roll").addEventListener("click", function () {
-  //shoo ali talaar buusniig hadgalah huvisagch. 1-6 shoo
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
+  if (isNewGame === true) {
+    //shoo ali talaar buusniig hadgalah huvisagch. 1-6 shoo
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
 
-  // shoonii zurag haruulah:
-  diceDom.style.display = "block";
+    // shoonii zurag haruulah:
+    diceDom.style.display = "block";
 
-  //buusan sanamsargui hargalzah toonii zurgiig web dr gargaj irne
-  diceDom.src = "dice-" + diceNumber + ".png";
-  //   alert("Shoo buulaa : " + diceNumber);
+    //buusan sanamsargui hargalzah toonii zurgiig web dr gargaj irne
+    diceDom.src = "dice-" + diceNumber + ".png";
+    //   alert("Shoo buulaa : " + diceNumber);
 
-  //-----------buusan too ni 1-s yalgaatai bol idevhitei toglogchiin eeljiin toog nemegduulne:
-  if (diceNumber !== 1) {
-    //1 ees yalgaatai too buulaa
-    roundScore = roundScore + diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
+    //-----------buusan too ni 1-s yalgaatai bol idevhitei toglogchiin eeljiin toog nemegduulne:
+    if (diceNumber !== 1) {
+      //1 ees yalgaatai too buulaa
+      roundScore = roundScore + diceNumber;
+      document.getElementById("current-" + activePlayer).textContent =
+        roundScore;
+    } else {
+      // --Toglogchiin eeljiig solino. ug toglogchiin tsugluulsan onoo 0lono.
+      switchToNextPlayer();
+    }
   } else {
-    // --Toglogchiin eeljiig solino. ug toglogchiin tsugluulsan onoo 0lono.
-    switchToNextPlayer();
+    alert("btn-roll Event listener - Game OVER");
   }
 });
 
 // HOLD tovchnii event Listener
 document.querySelector(".btn-hold").addEventListener("click", function () {
-  //odoo togloj bga toglogchiin tsugluulsan onoog global onoon deer ni nemej ugnu
-  scores[activePlayer] = scores[activePlayer] + roundScore;
+  if (isNewGame === true) {
+    //odoo togloj bga toglogchiin tsugluulsan onoog global onoon deer ni nemej ugnu
+    scores[activePlayer] = scores[activePlayer] + roundScore;
 
-  //delgets deer onoog ni haruulii
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
+    //delgets deer onoog ni haruulii
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
 
-  //ug toglogch hojson esehiig shalgana. win=100 onoo.
-  scores[activePlayer] >= 10
-    ? ((document.getElementById("name-" + activePlayer).textContent =
-        "Winner!!!"),
-      document
-        .querySelector(".player-" + activePlayer + "-panel")
-        .classList.add("winner"),
-      document
-        .querySelector(".player-" + activePlayer + "-panel")
-        .classList.remove("active"))
-    : switchToNextPlayer();
+    //WINNER! ug toglogch hojson esehiig shalgana. win=100 onoo. isGameOver=true
+    scores[activePlayer] >= 10
+      ? ((document.getElementById("name-" + activePlayer).textContent =
+          "Winner!!!"),
+        document
+          .querySelector(".player-" + activePlayer + "-panel")
+          .classList.add("winner"),
+        document
+          .querySelector(".player-" + activePlayer + "-panel")
+          .classList.remove("active"),
+        (isNewGame = false))
+      : switchToNextPlayer();
+  } else {
+    alert("HOLD Event listener - Game OVER");
+  }
 });
 
 //--- DRY-Dont repeat yourself --- olon davtaad bga bolhoor toglogchiin bairiig solidog uildeliig function bolgii

@@ -1,28 +1,50 @@
-//toglogchiin eeljiin tuluviig hadgalah huvisagch 1-r toglogch 0; 2-r toglogch 1 gesen utga awna
-var activePlayer = 0;
-
-//toglogchdiin tsugluulsan onoog hadgalah huvisagch
-var scores = [0, 0];
-
-//toglogchiin eeljindee tsugluulj baigaag hadgalah huvisagch
-var roundScore = 0;
-
-// program ehlehed beltgii:
-// document.querySelector("#score-0").textContent = 0;
-// document.querySelector("#score-1").textContent = 0;
-// document.querySelector("#current-0").textContent = 0;
-// document.querySelector("#current-1").textContent = 0;
-
-document.getElementById("score-0").textContent = 0;
-document.getElementById("score-1").textContent = 0;
-document.getElementById("current-0").textContent = 0;
-document.getElementById("current-1").textContent = 0;
-
 //document.querySelector(".dice") -g bainga duudahgui neg variabled joorloj awaad ashiglaad yawchii.Engevel programm dahin dahin querry hhgui mash hurdan bolno.
 var diceDom = document.querySelector(".dice");
 
-// shoonii zuragiig alga bolgoloo:
-diceDom.style.display = "none";
+//toglogchiin eeljiin tuluviig hadgalah huvisagch 1-r toglogch 0; 2-r toglogch 1 gesen utga awna
+var activePlayer;
+
+//toglogchdiin tsugluulsan onoog hadgalah huvisagch
+var scores;
+
+//toglogchiin eeljindee tsugluulj baigaag hadgalah huvisagch
+var roundScore;
+
+//togloomiig shineer ehluuleh function
+function initGame() {
+  //toglogchiin eeljiin tuluviig hadgalah huvisagch 1-r toglogch 0; 2-r toglogch 1 gesen utga awna
+  activePlayer = 0;
+
+  //toglogchdiin tsugluulsan onoog hadgalah huvisagch
+  scores = [0, 0];
+
+  //toglogchiin eeljindee tsugluulj baigaag hadgalah huvisagch
+  roundScore = 0;
+
+  // program ehlehed beltgii:
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
+
+  //toglogchdiin neriig butsaaj gargii:
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+  //winnerees bolj toglogchiin ner ulaanaar haragdaad bgaag arilgii:
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  //player 1-n ulaan buurunhiig gargaj irii:
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+  document.querySelector(".player-0-panel").classList.add("active");
+
+  // shoonii zuragiig alga bolgoloo:
+  diceDom.style.display = "none";
+}
+
+//shineer ehluuleh function duudii:
+initGame();
 
 // Shoo shiddeg event listener. shooShid -g arilgaad anonymous function nemchlee
 document.querySelector(".btn-roll").addEventListener("click", function () {
@@ -87,6 +109,4 @@ function switchToNextPlayer() {
 }
 
 //togloomiig shineer ehluuleh tovchnii event listener
-document.querySelector(".btn-new").addEventListener("click", function () {
-  alert("ccc");
-});
+document.querySelector(".btn-new").addEventListener("click", initGame);

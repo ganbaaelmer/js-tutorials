@@ -24,12 +24,46 @@ var diceDom = document.querySelector(".dice");
 // shoonii zuragiig alga bolgoloo:
 diceDom.style.display = "none";
 
-// shooShid -g arilgaad anonymous function nemchlee
+// Shoo shiddeg event listener. shooShid -g arilgaad anonymous function nemchlee
 document.querySelector(".btn-roll").addEventListener("click", function () {
   //shoo ali talaar buusniig hadgalah huvisagch. 1-6 shoo
   var diceNumber = Math.floor(Math.random() * 6) + 1;
+
   // shoonii zurag haruulah:
   diceDom.style.display = "block";
+
+  //buusan sanamsargui hargalzah toonii zurgiig web dr gargaj irne
   diceDom.src = "dice-" + diceNumber + ".png";
   //   alert("Shoo buulaa : " + diceNumber);
+
+  //buusan too ni 1-s yalgaatai bol idevhitei toglogchiin eeljiin toog nemegduulne:
+  if (diceNumber !== 1) {
+    //1 ees yalgaatai too buulaa
+    roundScore = roundScore + diceNumber;
+    document.getElementById("current-" + activePlayer).textContent = roundScore;
+  } else {
+    // ug toglogchiin tsugluulsan onoo 0lono.
+    roundScore = 0;
+    document.getElementById("current-" + activePlayer).textContent = 0;
+
+    //Ulaan tsegiig shiljuuleh
+    document.querySelector(".player-0-panel").classList.toggle("active");
+    document.querySelector(".player-1-panel").classList.toggle("active");
+
+    //shoog tur alga bolgoh
+    diceDom.style.display = "none";
+
+    //1 buusan tul toglogchiin eeljiig nuguu toglogchruu shiljuulne
+    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+    // if (activePlayer === 0) {
+    //   activePlayer = 1;
+    //   document.getElementById("current-" + 0).textContent = 0;
+    //   roundScore = 0;
+    // } else {
+    //   activePlayer = 0;
+    //   document.getElementById("current-" + 1).textContent = 0;
+    //   roundScore = 0;
+    // }
+  }
 });

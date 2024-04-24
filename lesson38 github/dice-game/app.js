@@ -1,6 +1,9 @@
 //document.querySelector(".dice") -g bainga duudahgui neg variabled joorloj awaad ashiglaad yawchii.Engevel programm dahin dahin querry hhgui mash hurdan bolno.
 var diceDom = document.querySelector(".dice");
 
+//yalah onoog tavij ugluu
+winScoreLimit = 100;
+
 //togloom duussan esehiig hadgalah tuluviin huvisagch
 var isNewGame;
 
@@ -90,7 +93,7 @@ document.querySelector(".btn-hold").addEventListener("click", function () {
       scores[activePlayer];
 
     //WINNER! ug toglogch hojson esehiig shalgana. win=100 onoo. isGameOver=true
-    scores[activePlayer] >= 10
+    scores[activePlayer] >= winScoreLimit
       ? ((document.getElementById("name-" + activePlayer).textContent =
           "Winner!!!"),
         document
